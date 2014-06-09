@@ -2,9 +2,13 @@ CC = g++
 HEADERS = event.h temporal_relation.h composite_event.h
 SOURCES = event.cc composite_event.cc main.cc
 
-OUTPUT = ieminer
-OUT_OPTION = -o $(OUTPUT)
+# For ubuntu
+#OUTPUT = ieminer
+#OUT_OPTION = -o $(OUTPUT)
 
+# For Mac OS X
+#OUTPUT = a.out
+#OUT_OPTION = 
 
 build:
 	$(CC) $(HEADERS)

@@ -4,6 +4,7 @@
 
 #include <cstdio>
 #include <vector>
+#include <map>
 
 #include "event.h"
 #include "temporal_relation.h"
@@ -16,17 +17,33 @@ public:
 	CompositeEvent(Event* e) {
 		this->start_ = e->start_;
 		this->end_ = e->end_;
+
+        this->event_list_.push_back(*e);
 	}
+    CompositeEvent(CompositeEvent& ce) {
+        this->start_ = ce.start;
+        this->end_ = ce.end_;
+        this->first_ = ce.first_;
+        this->dominant_ = ce.dominant_;
+
+        std::copy(ce.event_list_.begin(), ce.event_list_.end(), this->event_list_.begin());
+        std::copy(ce.relation_list_.begin(), ce.relation_list_.end(), this->relation_list_.begin());
+    }
+    // "join" constructor TODO
+	CompositeEvent(CompositeEvent* tpK, CompositeEvent* tpTwo) {}
 
 	bool append(Event* e);
-	CompositeEvent* join(int idx_dominant, CompositeEvent* ce, int idx_first);
+    void getFrequentTwoPatterns(std::map<CompositeEvent, int>& fTwo);
+    bool contains(CompositeEvent* ce);
 
-	Event* getFirst();
-	Event* getDominant();
+	Event* getFirst() { return first_->type_; }
+    int indexOfFirst();
+	Event* getDominant() { return dominant_->type_; }
+    int indexOfDominant();
 
 	int64_t getStart();
 	int64_t getEnd();
-	int getLength();
+	int getLength() { return event_list_.size(); }
 
 	void printAll();
 
@@ -39,10 +56,29 @@ private:
 	std::vector<TemporalRelation> relation_list_;
 
 	Event* first_;
+    int index_of_first_;
 	Event* dominant_;
+    int index_of_dominant_;
 
 	int64_t start_;
 	int64_t end_;
+};
+
+struct CmpCompositeEvent {
+    bool operator()(const CompositeEvent& a, CompositeEvent&b) {
+        if(a.getLength() != b.getLength())
+            return false;
+
+        if(a.event_list_[0].type_ != b.event_list_[0].type_)
+            return false;
+        for(int i = 1; i < a.getLength(); i++) {
+            if(a.event_list_[i].type_ != b.event_list_[i].type_)
+                return false;
+            if(a.relation_list_[i - 1] != b.relation_list_[i - 1])
+                return false;
+        }
+        return true;
+    }
 };
 
 #endif
