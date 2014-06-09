@@ -35,11 +35,34 @@ public:
 		rel_count_[COUNT_O] = rel_count[COUNT_O];
 		rel_count_[COUNT_S] = rel_count[COUNT_S];
 	}
+	TemporalRelation(const TemporalRelation& tr) : rel_type_(tr.rel_type_) {
+		rel_count_[COUNT_C] = tr.rel_count_[COUNT_C];
+		rel_count_[COUNT_F] = tr.rel_count_[COUNT_F];
+		rel_count_[COUNT_M] = tr.rel_count_[COUNT_M];
+		rel_count_[COUNT_O] = tr.rel_count_[COUNT_O];
+		rel_count_[COUNT_S] = tr.rel_count_[COUNT_S];
+	}
+
+	bool isEqualTo(const TemporalRelation& cmp) const {
+		if(this->rel_type_ != cmp.rel_type_)
+			return false;
+		if(this->rel_count_[COUNT_C] != cmp.rel_count_[COUNT_C])
+			return false;
+		if(this->rel_count_[COUNT_F] != cmp.rel_count_[COUNT_F])
+			return false;
+		if(this->rel_count_[COUNT_M] != cmp.rel_count_[COUNT_M])
+			return false;
+		if(this->rel_count_[COUNT_O] != cmp.rel_count_[COUNT_O])
+			return false;
+		if(this->rel_count_[COUNT_S] != cmp.rel_count_[COUNT_S])
+			return false;
+		return true;
+	}
 
 	REL_TYPE rel_type_;
 	int32_t rel_count_[5];
 
-	void print() {
+	void print() const {
 		switch(rel_type_) {
 			case TYPE_BEFORE:
 				printf("Before"); break;
