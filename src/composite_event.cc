@@ -14,7 +14,7 @@ int64_t getEnd();
 // Privates
 */
 
-CompositeEvent::CompositeEvent(CompositeEvent* tpK, CompositeEvent* tpTwo) {
+CompositeEvent::CompositeEvent(const CompositeEvent* tpK, const CompositeEvent* tpTwo) {
     assert(tpK->getDominant() == tpTwo->getFirst());
 
     this->start_ = tpK->start_;
@@ -22,8 +22,8 @@ CompositeEvent::CompositeEvent(CompositeEvent* tpK, CompositeEvent* tpTwo) {
     this->first_ = tpK->first_;
     this->dominant_ = tpK->dominant_;
 
-    std::copy(tpK->event_list_.begin(), tpK->event_list_.end(), this->event_list_.begin());
-    std::copy(tpK->relation_list_.begin(), tpK->relation_list_.end(), this->relation_list_.begin());
+    std::copy(tpK->event_list_.begin(), tpK->event_list_.end(), std::back_inserter(this->event_list_));
+    std::copy(tpK->relation_list_.begin(), tpK->relation_list_.end(), std::back_inserter(this->relation_list_));
 
     this->append(Event((*tpTwo->event_list_.end()).type_, (*tpTwo->event_list_.end()).start_, (*tpTwo->event_list_.end()).end_));
 }
@@ -50,7 +50,7 @@ bool CompositeEvent::append(Event e) {
 	return true;
 }
 
-void CompositeEvent::getFrequentTwoPatterns(std::map<CompositeEvent, int, CmpCompositeEvent>& fTwo) {
+void CompositeEvent::getFrequentTwoPatterns(std::map<CompositeEvent, int, CmpCompositeEvent>& fTwo) const {
     if(event_list_.size() > 1) {
         for(int i = 0; i < event_list_.size(); i++) {
             for(int j = i + 1; j < event_list_.size(); j++) {

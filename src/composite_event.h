@@ -14,7 +14,7 @@ struct CmpCompositeEvent;
 class CompositeEvent {
 public:
 	CompositeEvent() : start_(NULL_TIME), end_(NULL_TIME), first_(NULL_EVENT), dominant_(NULL_EVENT) {}
-	CompositeEvent(Event* e) {
+	CompositeEvent(const Event* e) {
 		this->start_ = e->start_;
 		this->end_ = e->end_;
 
@@ -26,14 +26,16 @@ public:
         this->first_ = ce.first_;
         this->dominant_ = ce.dominant_;
 
-        std::copy(ce.event_list_.begin(), ce.event_list_.end(), this->event_list_.begin());
-        std::copy(ce.relation_list_.begin(), ce.relation_list_.end(), this->relation_list_.begin());
+        if(ce.event_list_.size() > 0 )
+            std::copy(ce.event_list_.begin(), ce.event_list_.end(), std::back_inserter(this->event_list_));
+        if(ce.relation_list_.size() > 0)
+            std::copy(ce.relation_list_.begin(), ce.relation_list_.end(), std::back_inserter(this->relation_list_));
     }
     // "join" constructor TODO
-	CompositeEvent(CompositeEvent* tpK, CompositeEvent* tpTwo);
+	CompositeEvent(const CompositeEvent* tpK, const CompositeEvent* tpTwo);
 
 	bool append(Event e);
-    void getFrequentTwoPatterns(std::map<CompositeEvent, int, CmpCompositeEvent>& fTwo);
+    void getFrequentTwoPatterns(std::map<CompositeEvent, int, CmpCompositeEvent>& fTwo) const;
     bool contains(CompositeEvent* ce);
 
 	int64_t getFirst() const { return first_; }

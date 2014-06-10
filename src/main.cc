@@ -4,6 +4,7 @@
 #include "event.h"
 #include "temporal_relation.h"
 #include "composite_event.h"
+#include "ieminer.h"
 
 int main() {
 	// Set-up test data set
@@ -39,7 +40,7 @@ int main() {
 	database.push_back(el4);
 
 	// CompositeEvent append test
-	std::vector<CompositeEvent> ce_list;
+	std::vector<CompositeEvent*> ce_list;
 	for(std::vector<std::vector<Event> >::iterator iter = database.begin(); iter != database.end(); iter++) {
 		printf("creating a composite event..\n");
 		CompositeEvent* ce = new CompositeEvent();
@@ -49,8 +50,19 @@ int main() {
 			ce->printAll();
 		}
 		printf("One composite event created!\n");
-		ce_list.push_back(*ce);
+		ce_list.push_back(ce);
 	}
 
+    printf("\nCheck CELIST!\n");
+	for(std::vector<CompositeEvent*>::iterator iter = ce_list.begin(); iter != ce_list.end(); iter++) {
+        (*iter)->printAll();
+    }
+
 	// Generate TP
+    IEMiner* iem = new IEMiner();
+    cemap_t fK = iem->getStartingFrequentTwoPatterns(2, database);
+    for(cemap_t::iterator iter = fK.begin(); iter != fK.end(); iter++) {
+        printf("Count: %d >> ", (*iter).second);
+        (*iter).first.printAll();
+    }
 }

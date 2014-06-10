@@ -1,6 +1,6 @@
-CC = g++
-HEADERS = event.h temporal_relation.h composite_event.h
-SOURCES = event.cc composite_event.cc main.cc
+CC = g++ -g
+HEADERS = event.h temporal_relation.h composite_event.h ieminer.h
+SOURCES = event.cc composite_event.cc main.cc ieminer.cc
 
 #OUTPUT = ieminer
 #OUT_OPTION = -o $(OUTPUT)
