@@ -14,15 +14,28 @@ struct CmpCompositeEvent;
 class CompositeEvent {
 public:
 	CompositeEvent() : start_(NULL_TIME), end_(NULL_TIME), first_(NULL_EVENT), dominant_(NULL_EVENT) {}
+	CompositeEvent(const Event e) {
+		this->start_ = e.start_;
+		this->end_ = e.end_;
+
+        this->first_ = e.type_;
+        this->dominant_ = e.type_;
+
+        this->event_list_.push_back(e);
+	}
 	CompositeEvent(const Event* e) {
 		this->start_ = e->start_;
 		this->end_ = e->end_;
+
+        this->first_ = e->type_;
+        this->dominant_ = e->type_;
 
         this->event_list_.push_back(*e);
 	}
     CompositeEvent(const CompositeEvent& ce) {
         this->start_ = ce.start_;
         this->end_ = ce.end_;
+
         this->first_ = ce.first_;
         this->dominant_ = ce.dominant_;
 
@@ -47,6 +60,21 @@ public:
 
 	void printAll() const;
 
+    bool operator==(const CompositeEvent& b) {
+        if(this->getLength() != b.getLength())
+            return false;
+
+        if(this->event_list_[0].type_ != b.event_list_[0].type_)
+            return false;
+        for(int i = 1; i < this->getLength(); i++) {
+            if(this->event_list_[i].type_ != b.event_list_[i].type_)
+                return false;
+            if(!this->relation_list_[i - 1].isEqualTo(b.relation_list_[i - 1]))
+                return false;
+        }
+        return true;
+    }
+
 	std::vector<Event> event_list_;
 	std::vector<TemporalRelation> relation_list_;
 
@@ -65,19 +93,27 @@ private:
 };
 
 struct CmpCompositeEvent {
+    // true when a > b
     bool operator()(const CompositeEvent& a,const CompositeEvent& b) const {
-        if(a.getLength() != b.getLength())
-            return false;
+        assert(a.getLength() > 0);
+        assert(b.getLength() > 0);
 
-        if(a.event_list_[0].type_ != b.event_list_[0].type_)
-            return false;
+        if(a.getLength() < b.getLength())
+            return true;
+
+        if(a.event_list_[0].start_ < b.event_list_[0].start_)
+            return true;
+        else if(a.event_list_[0].start_ == b.event_list_[0].start_ && a.event_list_[0].end_ < b.event_list_[0].end_)
+            return true;
         for(int i = 1; i < a.getLength(); i++) {
-            if(a.event_list_[i].type_ != b.event_list_[i].type_)
-                return false;
-            if(!a.relation_list_[i - 1].isEqualTo(b.relation_list_[i - 1]))
-                return false;
+            if(a.event_list_[i].start_ < b.event_list_[i].start_)
+                return true;
+            else if(a.event_list_[i].start_ == b.event_list_[i].start_ && a.event_list_[i].end_ < b.event_list_[i].end_)
+                return true;
+            if(a.relation_list_[i - 1].isLessThan(b.relation_list_[i - 1]))
+                return true;
         }
-        return true;
+        return false;
     }
 };
 

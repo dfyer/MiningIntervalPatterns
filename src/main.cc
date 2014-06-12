@@ -62,7 +62,7 @@ int main() {
     IEMiner* iem = new IEMiner();
     cemap_t fK = iem->getStartingFrequentTwoPatterns(2, database);
     for(cemap_t::iterator iter = fK.begin(); iter != fK.end(); iter++) {
-        printf("Count: %d >> ", (*iter).second);
+        printf(" >> Count %d with ce ", (*iter).second);
         (*iter).first.printAll();
     }
 }

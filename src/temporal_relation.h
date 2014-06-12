@@ -59,6 +59,38 @@ public:
 		return true;
 	}
 
+	bool isLessThan(const TemporalRelation& cmp) const {
+        const REL_TYPE& rt = this->rel_type_;
+        const int32_t& rc = this->rel_count_[COUNT_C];
+        const int32_t& rf = this->rel_count_[COUNT_F];
+        const int32_t& rm = this->rel_count_[COUNT_M];
+        const int32_t& ro = this->rel_count_[COUNT_O];
+        const int32_t& rs = this->rel_count_[COUNT_S];
+
+        const REL_TYPE& ct = cmp.rel_type_;
+        const int32_t& cc = cmp.rel_count_[COUNT_C];
+        const int32_t& cf = cmp.rel_count_[COUNT_F];
+        const int32_t& cm = cmp.rel_count_[COUNT_M];
+        const int32_t& co = cmp.rel_count_[COUNT_O];
+        const int32_t& cs = cmp.rel_count_[COUNT_S];
+
+        if(rt < ct) {
+            return true;
+        } else if(rt == ct && rc < cc) {
+            return true;
+        } else if(rt == ct && rc == cc && rf < cf) {
+            return true;
+        } else if(rt == ct && rc == cc && rf == cf && rm < cm) {
+            return true;
+        } else if(rt == ct && rc == cc && rf == cf && rm == cm && ro < co) {
+            return true;
+        } else if(rt == ct && rc == cc && rf == cf && rm == cm && ro == co && rs < cs) {
+            return true;
+        } else {
+            return false;
+        }
+	}
+
 	REL_TYPE rel_type_;
 	int32_t rel_count_[5];
 

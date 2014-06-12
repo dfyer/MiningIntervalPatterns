@@ -49,33 +49,52 @@ cemap_t IEMiner::getFrequentTwoPatterns(int min_sup, cemap_t fK) {
 }
 
 cemap_t IEMiner::getStartingFrequentTwoPatterns(int min_sup, std::vector<std::vector<Event> > database) {
-    cemap_t fK;
+    cemap_t fSingle;
 
+    // Get every single patterns. Frequent pattern list (CompositeEvent) keeps order for next step
     for(std::vector<std::vector<Event> >::iterator iter = database.begin(); iter != database.end(); iter++) {
-        if((*iter).size() > 1) {
-            for(int i = 0; i < (*iter).size(); i++) {
-                for(int j = i + 1; j < (*iter).size(); j++) {
-                    CompositeEvent* tpTwo = new CompositeEvent(&(*iter)[i]);
-                    tpTwo->append((*iter)[j]);
-
-                    if(fK.count(*tpTwo))
-                        fK.find(*tpTwo)->second += 1;
-                    else
-                        fK.insert(cemap_t::value_type(*tpTwo, 0));
-                }
+        // acquire an ordered event list el
+        std::vector<Event>& el = (*iter);
+        for(int i = 0; i < el.size(); i++) {
+            for(int j = i + 1; j < el.size(); j++) {
+                CompositeEvent* tpSingle = new CompositeEvent(el[i]);
+                tpSingle->append(el[j]);
+                if(fSingle.count(*tpSingle) == 0)
+                    fSingle[*tpSingle] = 1;
+                else
+                    fSingle[*tpSingle] += 1;
             }
         }
     }
 
+    // Get every two patterns.
+    /*
+    cemap_t fTwo;
+    for(cemap_t::iterator iter = fSingle.begin(); iter != fSingle.end(); ++iter) {
+        cemap_t::iterator jter = iter;
+        jter ++;
+        for(; jter != fSingle.end(); ++jter) {
+            CompositeEvent* tpTwo = new CompositeEvent(iter->first);
+            tpTwo->append(jter->first.event_list_[0]);
+            if(fTwo.count(*tpTwo) == 0)
+                fTwo[*tpTwo] = 1;
+            else
+                fTwo[*tpTwo] += 1;
+        }
+    }
+    */
+
     // Delete with sup < min_sup
+    /*
     std::vector<CompositeEvent> toBeRemoved;
-    for(cemap_t::iterator iter_tpK = fK.begin(); iter_tpK != fK.end(); iter_tpK++) {
+    for(cemap_t::iterator iter_tpK = fTwo.begin(); iter_tpK != fTwo.end(); iter_tpK++) {
         if((*iter_tpK).second < min_sup)
             toBeRemoved.push_back((*iter_tpK).first);
     }
     for(std::vector<CompositeEvent>::iterator iter_toBeRemoved = toBeRemoved.begin(); iter_toBeRemoved != toBeRemoved.end(); iter_toBeRemoved++) {
-        fK.erase(*iter_toBeRemoved);
+        fTwo.erase(*iter_toBeRemoved);
     }
+    */
 
-    return fK;
+    return fSingle;
 }
