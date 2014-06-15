@@ -9,16 +9,17 @@
 #include "temporal_relation.h"
 #include "composite_event.h"
 
-typedef std::map<CompositeEvent, int, CmpCompositeEvent> cemap_t;
-
 class IEMiner {
 public:
-    cemap_t getNextCandidateSet(int k, cemap_t fK);
-	//TODO: void countSupport(int level, CompositeEventList el, CandidateSet candidate);
-	void ieMiner(double min_sup_ratio, std::vector<std::vector<Event> > database);
+    cemap_t getNextCandidateSet(const int k_plus_one, const cemap_t fK);
+	void countSupport(const int level, const std::vector<Event> el, cemap_t& candidateSet);
+	cemap_t ieMiner(const double min_sup_ratio, const std::vector<std::vector<Event> > database);
 //private:
-    cemap_t getFrequentTwoPatterns(int min_sup, cemap_t fK);
-    cemap_t getStartingFrequentTwoPatterns(int min_sup, std::vector<std::vector<Event> > database);
+    bool containsPrefixIn(const cemap_t& candidateSet, const CompositeEvent newtp);
+    cemap_t getFrequentTwoPatterns(const int min_sup, const cemap_t fK);
+    cemap_t getStartingFrequentTwoPatterns(const int min_sup, const std::vector<std::vector<Event> > database);
+    cemap_t getSingle(const int min_sup, const std::vector<std::vector<Event> > database);
+    bool hasDuplicate(const CompositeEvent* tpK, const CompositeEvent* tpTwo);
 };
 
 #endif

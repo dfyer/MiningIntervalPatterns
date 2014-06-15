@@ -25,7 +25,7 @@ CompositeEvent::CompositeEvent(const CompositeEvent* tpK, const CompositeEvent* 
     std::copy(tpK->event_list_.begin(), tpK->event_list_.end(), std::back_inserter(this->event_list_));
     std::copy(tpK->relation_list_.begin(), tpK->relation_list_.end(), std::back_inserter(this->relation_list_));
 
-    this->append(Event((*tpTwo->event_list_.end()).type_, (*tpTwo->event_list_.end()).start_, (*tpTwo->event_list_.end()).end_));
+    this->append(Event((*tpTwo->event_list_.rbegin()).type_, (*tpTwo->event_list_.rbegin()).start_, (*tpTwo->event_list_.rbegin()).end_));
 }
 
 bool CompositeEvent::append(Event e) {
@@ -33,9 +33,9 @@ bool CompositeEvent::append(Event e) {
 	
 	if(event_list_.size() > 0) {
 		relation_list_.push_back(getRelation(e));
-		event_list_.push_back(e);
-		if(this->end_ < e.end_) {
-			this->end_ = e.end_;
+        event_list_.push_back(e);
+        if(this->end_ < e.end_) {
+            this->end_ = e.end_;
             this->dominant_ = e.type_;
         }
 	} else {
@@ -50,7 +50,7 @@ bool CompositeEvent::append(Event e) {
 	return true;
 }
 
-void CompositeEvent::getFrequentTwoPatterns(std::map<CompositeEvent, int, CmpCompositeEvent>& fTwo) const {
+void CompositeEvent::getFrequentTwoPatterns(cemap_t& fTwo) const {
     if(event_list_.size() > 1) {
         for(int i = 0; i < event_list_.size(); i++) {
             for(int j = i + 1; j < event_list_.size(); j++) {
@@ -66,6 +66,22 @@ void CompositeEvent::getFrequentTwoPatterns(std::map<CompositeEvent, int, CmpCom
     }
 }
 
+bool CompositeEvent::containsPrefix(const CompositeEvent& tp) const {
+    assert(this->getLength() > 0);
+    assert(tp.getLength() > 0);
+    assert(this->getLength() > tp.getLength());
+
+    if(this->event_list_[0].type_ != tp.event_list_[0].type_)
+        return false;
+    for(int i = 1; i < tp.getLength(); i++) {
+        if(!this->relation_list_[i - 1].isEqualTo(tp.relation_list_[i - 1]))
+            return false;
+        if(this->event_list_[0].type_ != tp.event_list_[0].type_)
+            return false;
+    }
+    return true;
+}
+
 void CompositeEvent::printAll() const {
 	assert(event_list_.size() == (relation_list_.size() + 1));
 
@@ -74,10 +90,20 @@ void CompositeEvent::printAll() const {
 	}
 
 	if(event_list_.size() > 0) {
+        if((*event_list_.begin()).type_ == first_)
+            printf("f*");
+        if((*event_list_.begin()).type_ == dominant_)
+            printf("d*");
 		(*event_list_.begin()).print();
 		for(int i = 0; i < relation_list_.size(); i++) {
 			relation_list_[i].print();
+
+            if(event_list_[i+1].type_ == first_)
+                printf("f*");
+            else if(event_list_[i+1].type_ == dominant_)
+                printf("d*");
 			event_list_[i+1].print();
+
 			printf(") ");
 		}
 	}

@@ -76,19 +76,20 @@ public:
 
         if(rt < ct) {
             return true;
-        } else if(rt == ct && rc < cc) {
-            return true;
-        } else if(rt == ct && rc == cc && rf < cf) {
-            return true;
-        } else if(rt == ct && rc == cc && rf == cf && rm < cm) {
-            return true;
-        } else if(rt == ct && rc == cc && rf == cf && rm == cm && ro < co) {
-            return true;
-        } else if(rt == ct && rc == cc && rf == cf && rm == cm && ro == co && rs < cs) {
-            return true;
-        } else {
+        } else if(rt > ct) {
             return false;
         }
+        
+        //if equal, pass
+        
+        for(int i = 0; i < 5; i ++) {
+            if(this->rel_count_[i] < cmp.rel_count_[i])
+                return true;
+            else if(this->rel_count_[i] > cmp.rel_count_[i])
+                return false;
+        }
+
+        return false;
 	}
 
 	REL_TYPE rel_type_;
