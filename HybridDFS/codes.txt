@@ -1,0 +1,438 @@
+     Unique   Code in    Event Description
+      Code    XML-File
+@		0	head pos: tilt fr/bk
+	1	2	front
+	2	6	slightly front
+	3	8	further front
+	4	3	back
+	5	5	slightly back
+	6	11	further back
+	7	400000	HOLD
+	8	400001	ONSET
+	9	400002	OFFSET
+@		1	head pos: turn
+	10	2	left
+	11	5	slightly left
+	12	7	further left
+	13	3	right
+	14	4	slightly right
+	15	6	further right
+	16	400000	HOLD
+	17	400001	ONSET
+	18	400002	OFFSET
+@		2	head pos: tilt side
+	19	2	left
+	20	5	slightly left
+	21	7	further left
+	22	3	right
+	23	4	slightly right
+	24	6	further right
+	25	400000	HOLD
+	26	400001	ONSET
+	27	400002	OFFSET
+@		3	head pos: jut
+	28	2	forward
+	29	8	slightly forward
+	30	7	further forward
+	31	6	back
+	32	10	slightly back
+	33	11	further back
+	34	400000	HOLD
+	35	400001	ONSET
+	36	400002	OFFSET
+@		4	head mvmt: nod
+	37	2	rapid
+	38	9	slight rapid head nod
+	39	3	slow
+	40	10	slight slow head nod
+	41	4	single
+	42	11	slight single head nod
+	43	400000	HOLD
+	44	400001	ONSET
+	45	400002	OFFSET
+@		5	head mvmt: shake
+	46	2	rapid
+	47	5	slight rapid head shake
+	48	3	slow
+	49	6	slight slow head shake
+	50	4	single
+	51	7	slight single head shake
+	52	400000	HOLD
+	53	400001	ONSET
+	54	400002	OFFSET
+@		6	head mvmt: side to side
+	55	2	rapid
+	56	3	slow
+	57	4	single
+	58	400000	HOLD
+	59	400001	ONSET
+	60	400002	OFFSET
+@		7	head mvmt: jut
+	61	2	slow
+	62	3	forward
+	63	6	back
+	64	400000	HOLD
+	65	400001	ONSET
+	66	400002	OFFSET
+@		8	body lean
+	67	2	left
+	68	3	right
+	69	4	forward
+	70	7	slightly forward
+	71	8	forward/left
+	72	6	forward/right
+	73	5	back
+	74	9	slightly back
+	75	10	back left
+	76	11	back right
+	77	400000	HOLD
+	78	400001	ONSET
+	79	400002	OFFSET
+@		32	body mvmt
+	80	0	down
+	81	400000	HOLD
+	82	400001	ONSET
+	83	400002	OFFSET
+@		33	neck
+	84	0	tensed
+	85	1	tensed/left
+	86	2	tensed/right
+	87	400000	HOLD
+	88	400001	ONSET
+	89	400002	OFFSET
+@		9	shoulders
+	90	2	left
+	91	7	slightly left
+	92	12	left/down
+	93	17	left/raised
+	94	3	right
+	95	8	slightly right
+	96	13	right down
+	97	18	right raised
+	98	11	down
+	99	16	raised
+	100	19	further raised
+	101	4	forward
+	102	15	forward left
+	103	9	forward right
+	104	5	back
+	105	14	back left
+	106	10	back right
+	107	400000	HOLD
+	108	400001	ONSET
+	109	400002	OFFSET
+@		10	eye brows
+	110	2	raised
+	111	5	slightly raised
+	112	7	further raised
+	113	3	lowered
+	114	4	slightly lowered
+	115	6	further lowered
+	116	400000	HOLD
+	117	400001	ONSET
+	118	400002	OFFSET
+@		11	eye gaze
+	119	7	left
+	120	1	right
+	121	3	up
+	122	10	up/left
+	123	4	up/right
+	124	6	down
+	125	5	down/left
+	126	9	down/right
+	127	8	watch hands
+	128	11	addressee
+	129	400000	HOLD
+	130	400001	ONSET
+	131	400002	OFFSET
+@		12	eye aperture
+	132	2	blink
+	133	3	squint
+	134	16	slightly squinted
+	135	17	further squinted
+	136	6	lowered lid
+	137	13	slightly lowered
+	138	15	further lowered
+	139	4	wide
+	140	18	wider
+	141	7	closed
+	142	400000	HOLD
+	143	400001	ONSET
+	144	400002	OFFSET
+@		13	nose
+	145	2	wrinkle
+	146	3	tensed
+	147	4	slightly tensed
+	148	400000	HOLD
+	149	400001	ONSET
+	150	400002	OFFSET
+@		14	mouth
+	151	2	lips pursed: oo
+	152	3	lips pursed: oo-tight
+	153	4	lips pursed: mm
+	154	15	tongue out
+	155	6	tongue sucked in quickly
+	156	7	tongue mvmt lateral
+	157	8	cha
+	158	9	sta
+	159	10	puh
+	160	11	pow
+	161	18	sh
+	162	12	cs
+	163	13	intense
+	164	14	open
+	165	24	open &amp; round
+	166	25	open &amp; tense
+	167	26	open &amp; corners down
+	168	5	raised upper lip
+	169	19	lips spread
+	170	20	lips spread &amp; crnrs up
+	171	21	lips spread &amp; crnrs down
+	172	17	blow
+	173	22	bite lower lip
+	174	23	tongue on lwr lip
+	175	27	open &amp; tongue visible
+	176	29	brr
+	177	28	smile mouth open
+	178	400000	HOLD
+	179	400001	ONSET
+	180	400002	OFFSET
+@		15	cheeks
+	181	2	puffed
+	182	5	puff left
+	183	4	puff right
+	184	3	tensed
+	185	6	less tensed
+	186	8	tensed left
+	187	7	tensed right
+	188	400000	HOLD
+	189	400001	ONSET
+	190	400002	OFFSET
+@		16	negative
+	191	2	neg
+	192	400000	HOLD
+	193	400001	ONSET
+	194	400002	OFFSET
+@		17	wh question
+	195	2	whq
+	196	400000	HOLD
+	197	400001	ONSET
+	198	400002	OFFSET
+@		18	yes-no question
+	199	2	yes-no question
+	200	400000	HOLD
+	201	400001	ONSET
+	202	400002	OFFSET
+@		19	rhetorical question
+	203	2	rhq
+	204	3	wh rhq
+	205	4	yes-no rhq
+	206	400000	HOLD
+	207	400001	ONSET
+	208	400002	OFFSET
+@		20	topic/focus
+	209	2	focus/top1
+	210	3	top2
+	211	4	top3
+	212	5	foc/prop-with-ref-to
+	213	6	sentence-initial adverb
+	214	7	focus
+	215	400000	HOLD
+	216	400001	ONSET
+	217	400002	OFFSET
+@		21	conditional/when
+	218	2	conditional
+	219	3	when
+	220	400000	HOLD
+	221	400001	ONSET
+	222	400002	OFFSET
+@		22	role shift
+	223	1	John
+	224	400000	HOLD
+	225	400001	ONSET
+	226	400002	OFFSET
+@		24	subject agreement
+	227	2	agr-S
+	228	3	agr-dS
+	229	400000	HOLD
+	230	400001	ONSET
+	231	400002	OFFSET
+@		25	object agreement
+	232	2	agr-O
+	233	400000	HOLD
+	234	400001	ONSET
+	235	400002	OFFSET
+@		26	adverbial
+	236	2	far
+	237	3	cs
+	238	4	stress
+	239	5	mm
+	240	6	oo
+	241	7	cha
+	242	400000	HOLD
+	243	400001	ONSET
+	244	400002	OFFSET
+@		27	POS
+	245	0	Noun
+	246	1	Proper Noun
+	247	2	Pronoun
+	248	3	Determiner
+	249	4	Quantifier
+	250	5	Wh-word
+	251	6	Number
+	252	7	Negation
+	253	8	Verb
+	254	9	Adjective
+	255	10	Adverb
+	256	11	Preposition
+	257	20	Possessive
+	258	12	Modal
+	259	13	Tense
+	260	14	Classifier
+	261	15	Conjunction
+	262	16	Particle
+	263	28	Reflexive
+	264	27	Demonstrative
+	265	17	Discourse Marker
+	266	19	Aspect
+	267	22	Modal + Negative
+	268	26	Negative + Verb
+	269	24	Quantifier + Wh-word
+	270	23	Tense + Negative
+	271	21	Verb + Aspect
+	272	25	Wh + Particle
+	273	29	Tense + Aspect
+	274	30	Neg + Aspect
+	275	400000	HOLD
+	276	400001	ONSET
+	277	400002	OFFSET
+@		29	Non-dominant POS
+	278	0	Noun
+	279	1	Proper Noun
+	280	2	Pronoun
+	281	3	Determiner
+	282	4	Quantifier
+	283	5	Wh-word
+	284	6	Number
+	285	7	Negation
+	286	8	Verb
+	287	9	Adjective
+	288	10	Adverb
+	289	11	Preposition
+	290	12	Possessive
+	291	13	Modal
+	292	14	Tense
+	293	15	Classifier
+	294	18	Conjunction
+	295	16	Particle
+	296	26	Reflexive
+	297	27	Demonstrative
+	298	17	Discourse Marker
+	299	19	Aspect
+	300	21	Modal + Negation
+	301	24	Negation + Verb
+	302	23	Quantifier + Wh-word
+	303	22	Tense + Negation
+	304	20	Verb + Aspect
+	305	25	Wh + Particle
+	306	28	Tense + Aspect
+	307	29	Neg + Aspect
+	308	400000	HOLD
+	309	400001	ONSET
+	310	400002	OFFSET
+@		28	LDC POS
+	311	0	Coord Conj
+	312	1	Cardinal Number
+	313	2	Determiner
+	314	3	Existential there
+	315	4	Foreign Word
+	316	5	Prep or Sub Conj
+	317	6	Adjective
+	318	7	Adjective, comp
+	319	8	Adjective, superl
+	320	9	List item marker
+	321	10	Modal
+	322	11	Noun, sg/mass
+	323	12	Noun, plural
+	324	13	Proper Noun, sg
+	325	14	Proper Noun, pl
+	326	15	Predeterminer
+	327	16	Possessive ending
+	328	17	Personal Pronoun
+	329	18	Possessive Pronoun
+	330	19	Adverb
+	331	20	Adverb, comp
+	332	21	Adverb, superl
+	333	22	Particle
+	334	23	Symbol
+	335	24	to
+	336	25	Interjection
+	337	26	Verb, base form
+	338	27	Verb, past tense
+	339	28	Verb, gerund/pres part
+	340	29	Verb, past part
+	341	30	Verb, non-3p sg pres
+	342	31	Verb, 3p sg pres
+	343	32	Wh-determiner
+	344	33	Wh-pronoun
+	345	34	Possessive wh-pronoun
+	346	35	Wh-adverb
+	347	400000	HOLD
+	348	400001	ONSET
+	349	400002	OFFSET
+@		30	Non-manual LDC POS
+	350	0	Coord Conj
+	351	1	Cardinal Number
+	352	2	Determiner
+	353	3	Existential there
+	354	4	Foreign Word
+	355	5	Prep or Sub Conj
+	356	6	Adjective
+	357	7	Adjective, comp
+	358	8	Adjective, superl
+	359	9	List item marker
+	360	10	Modal
+	361	11	Noun, sg/mass
+	362	12	Noun, plural
+	363	13	Proper Noun, sg
+	364	14	Proper Noun, pl
+	365	15	Predeterminer
+	366	16	Possessive ending
+	367	17	Personal Pronoun
+	368	18	Possessive Pronoun
+	369	19	Adverb
+	370	20	Adverb, comp
+	371	21	Adverb, superl
+	372	22	Particle
+	373	23	Symbol
+	374	24	to
+	375	25	Interjection
+	376	26	Verb
+	377	27	Verb, past tense
+	378	28	Verb, gerund/pres part
+	379	29	Verb, past part
+	380	30	Verb, non-3p sg pres
+	381	31	Verb, 3p sg pres
+	382	32	Wh-determiner
+	383	33	Wh-pronoun
+	384	34	Possessive wh-pronoun
+	385	35	Wh-adverb
+	386	400000	HOLD
+	387	400001	ONSET
+	388	400002	OFFSET
+@		10000	main gloss
+	389	400000	HOLD
+	390	400001	ONSET
+	391	400002	OFFSET
+@		10001	non-dominant hand gloss
+	392	400000	HOLD
+	393	400001	ONSET
+	394	400002	OFFSET
+@		20000	literal translation
+	395	400000	HOLD
+	396	400001	ONSET
+	397	400002	OFFSET
+@		20001	English translation
+	398	400000	HOLD
+	399	400001	ONSET
+	400	400002	OFFSET
