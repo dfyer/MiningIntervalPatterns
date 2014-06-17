@@ -1,14 +1,17 @@
 
 #include <vector>
+#include <string>
 
 #include "event.h"
 #include "temporal_relation.h"
 #include "composite_event.h"
 #include "ieminer.h"
+#include "ieclassifier.h"
 
 int main() {
 	// Set-up test data set
 	std::vector<std::vector<Event> > database;
+    std::vector<std::string> database_class;
 
 	std::vector<Event> el1;
 	el1.push_back(Event(100, 0, 10));
@@ -16,12 +19,14 @@ int main() {
 	el1.push_back(Event(102, 8, 30));
 	el1.push_back(Event(103, 21, 26));
 	database.push_back(el1);
+    database_class.push_back("A");
 
 	std::vector<Event> el2;
 	el2.push_back(Event(100, 0, 10));
 	el2.push_back(Event(104, 34, 40));
 	el2.push_back(Event(105, 45, 55));
 	database.push_back(el2);
+    database_class.push_back("B");
 
 	std::vector<Event> el3;
 	el3.push_back(Event(100, 0, 10));
@@ -30,6 +35,7 @@ int main() {
 	el3.push_back(Event(103, 20, 25));
 	el3.push_back(Event(104, 34, 40));
 	database.push_back(el3);
+    database_class.push_back("A");
 
 	std::vector<Event> el4;
 	el4.push_back(Event(100, 1, 11));
@@ -38,6 +44,7 @@ int main() {
 	el4.push_back(Event(104, 35, 41));
 	el4.push_back(Event(105, 46, 56));
 	database.push_back(el4);
+    database_class.push_back("B");
 
 	// CompositeEvent append test
 	std::vector<CompositeEvent*> ce_list;
@@ -67,81 +74,17 @@ int main() {
         iter->first.printAll();
     }
 
-    /*
-	// Generate TP
-    //IEMiner* iem = new IEMiner();
-    cemap_t fK = iem->getStartingFrequentTwoPatterns(2, database);
-    for(cemap_t::iterator iter = fK.begin(); iter != fK.end(); iter++) {
-        printf("fStartingTwo >> Count %d with ce ", iter->second);
-        iter->first.printAll();
+    // IEClassifier
+    IEClassifier* iec = new IEClassifier(database, database_class, ieminer_result, 0.00000001);
+    for(int i = 0; i < iec->discriminatingPatterns_.size(); i++) {
+        printf("Discriminating Patterns: conf = %f, sup = %d, class_label = %s >> ", iec->conf_[i], iec->sup_[i], iec->clabel_[i].c_str());
+        iec->discriminatingPatterns_[i].printAll();
     }
 
-    cemap_t fTwo = iem->getFrequentTwoPatterns(1, fK);
-    for(cemap_t::iterator iter = fTwo.begin(); iter != fTwo.end(); iter++) {
-        printf("fTwo >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-
-    // 2
-    cemap_t nextCandidateSet = iem->getNextCandidateSet(3, fK);
-    for(cemap_t::iterator iter = nextCandidateSet.begin(); iter != nextCandidateSet.end(); iter++) {
-        printf("nextCandidateSet >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-
-    for(int i = 0; i < database.size(); i++)
-        iem->countSupport(3, database[i], nextCandidateSet);
-    for(cemap_t::iterator iter = nextCandidateSet.begin(); iter != nextCandidateSet.end(); iter++) {
-        printf("countSupport >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-
-    std::vector<CompositeEvent> toBeRemoved;
-    for(cemap_t::iterator iter_tpK = nextCandidateSet.begin(); iter_tpK != nextCandidateSet.end(); iter_tpK++) {
-        if((*iter_tpK).second < 2)
-            toBeRemoved.push_back((*iter_tpK).first);
-    }
-    for(std::vector<CompositeEvent>::iterator iter_toBeRemoved = toBeRemoved.begin(); iter_toBeRemoved != toBeRemoved.end(); iter_toBeRemoved++) {
-        nextCandidateSet.erase(*iter_toBeRemoved);
-    }
-    for(cemap_t::iterator iter = nextCandidateSet.begin(); iter != nextCandidateSet.end(); iter++) {
-        printf("frequentSet >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-    toBeRemoved.clear();
-
-    // 3
-    cemap_t nextCandidateSet2 = iem->getNextCandidateSet(4, nextCandidateSet);
-    for(cemap_t::iterator iter = nextCandidateSet2.begin(); iter != nextCandidateSet2.end(); iter++) {
-        printf("nextCandidateSet2 >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-
-    for(int i = 0; i < database.size(); i++)
-        iem->countSupport(4, database[i], nextCandidateSet2);
-    for(cemap_t::iterator iter = nextCandidateSet2.begin(); iter != nextCandidateSet2.end(); iter++) {
-        printf("countSupport >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-    
-    for(cemap_t::iterator iter_tpK = nextCandidateSet2.begin(); iter_tpK != nextCandidateSet2.end(); iter_tpK++) {
-        if((*iter_tpK).second < 2)
-            toBeRemoved.push_back((*iter_tpK).first);
-    }
-    for(std::vector<CompositeEvent>::iterator iter_toBeRemoved = toBeRemoved.begin(); iter_toBeRemoved != toBeRemoved.end(); iter_toBeRemoved++) {
-        nextCandidateSet2.erase(*iter_toBeRemoved);
-    }
-    for(cemap_t::iterator iter = nextCandidateSet2.begin(); iter != nextCandidateSet2.end(); iter++) {
-        printf("frequentSet >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-    toBeRemoved.clear();
-
-    // 5
-    cemap_t nextCandidateSet3 = iem->getNextCandidateSet(4, nextCandidateSet2);
-    for(cemap_t::iterator iter = nextCandidateSet3.begin(); iter != nextCandidateSet3.end(); iter++) {
-        printf("nextCandidateSet3 >> Count %d with ce ", iter->second);
-        iter->first.printAll();
-    }
-    */
+	std::vector<Event> es;
+	es.push_back(Event(100, 0, 10));
+	es.push_back(Event(102, 8, 30));
+	es.push_back(Event(103, 21, 26));
+    printf("Best_Conf >> %s\n", iec->best_conf(es).c_str());
+    printf("Majority_Class >> %s\n", iec->majority_class(es).c_str());
 }

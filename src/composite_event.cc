@@ -39,11 +39,13 @@ bool CompositeEvent::append(Event e) {
             this->dominant_ = e.type_;
         }
 	} else {
-		event_list_.push_back(e);
 		this->start_ = e.start_;
 		this->end_ = e.end_;
+
 		this->first_= e.type_;
 		this->dominant_ = e.type_;
+
+		event_list_.push_back(e);
 	}
 	assert(event_list_.size() == (relation_list_.size() + 1));
 
@@ -54,13 +56,17 @@ void CompositeEvent::getFrequentTwoPatterns(cemap_t& fTwo) const {
     if(event_list_.size() > 1) {
         for(int i = 0; i < event_list_.size(); i++) {
             for(int j = i + 1; j < event_list_.size(); j++) {
-                CompositeEvent* tpTwo = new CompositeEvent(&event_list_[i]);
-                tpTwo->append(Event(event_list_[j].type_, event_list_[j].start_, event_list_[j].end_));
+                CompositeEvent* tpTwo = new CompositeEvent(event_list_[i]);
+                //tpTwo->append(Event(event_list_[j].type_, event_list_[j].start_, event_list_[j].end_));
+                tpTwo->append(event_list_[j]);
                 
+                ++fTwo[*tpTwo];
+                /*
                 if(fTwo.count(*tpTwo))
                     fTwo.find(*tpTwo)->second += 1;
                 else
-                    fTwo.insert(std::map<CompositeEvent, int, CmpCompositeEvent>::value_type(*tpTwo, 0));
+                    fTwo.insert(cemap_t::value_type(*tpTwo, 0));
+                */
             }
         }
     }

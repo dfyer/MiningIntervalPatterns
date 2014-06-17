@@ -74,8 +74,9 @@ cemap_t IEMiner::ieMiner(const double min_sup_ratio, const std::vector<std::vect
     cemap_t result;
     cemap_t single = getSingle(min_sup, database);
     result.insert(single.begin(), single.end());
-    result.insert(candidateSet.begin(), candidateSet.end());
+    //result.insert(candidateSet.begin(), candidateSet.end());
 
+    bool flag = false;
     do {
         for(int i = 0; i < database.size(); i++)
             countSupport(level, database[i], candidateSet);
@@ -88,9 +89,9 @@ cemap_t IEMiner::ieMiner(const double min_sup_ratio, const std::vector<std::vect
             candidateSet.erase(toBeRemoved[i]);
 
         result.insert(candidateSet.begin(), candidateSet.end());
+        ++level;
         candidateSet = getNextCandidateSet(level, candidateSet);
 
-        ++level;
     } while(candidateSet.size() != 0);
 
     return result;
@@ -164,6 +165,10 @@ cemap_t IEMiner::getStartingFrequentTwoPatterns(const int min_sup, const std::ve
                 assert(fTwo.count(tpTwo) > 0);
             }
         }
+    }
+
+    for(cemap_t::iterator iter = fTwo.begin(); iter != fTwo.end(); iter++) {
+        iter->second = 0;
     }
 
     /*

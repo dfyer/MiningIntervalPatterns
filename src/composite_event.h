@@ -10,11 +10,9 @@
 #include "temporal_relation.h"
 
 
-struct CmpCompositeEvent;
 class CompositeEvent;
 
 typedef std::map<CompositeEvent, int> cemap_t;
-//typedef std::map<CompositeEvent, int, CmpCompositeEvent> cemap_t;
 
 class CompositeEvent {
 public:
@@ -106,27 +104,6 @@ private:
 
 	int64_t start_;
 	int64_t end_;
-};
-
-struct CmpCompositeEvent {
-    // true when a < b
-    bool operator()(const CompositeEvent& a,const CompositeEvent& b) const {
-        assert(a.getLength() > 0);
-        assert(b.getLength() > 0);
-
-//        if(a.getLength() < b.getLength())
-//            return true;
-
-        if(a.event_list_[0].type_ < b.event_list_[0].type_)
-            return true;
-        for(int i = 1; i < a.getLength(); i++) {
-//            if(a.relation_list_[i - 1].isLessThan(b.relation_list_[i - 1]))
-//                return true;
-            if(a.event_list_[i].type_ < b.event_list_[i].type_)
-                return true;
-        }
-        return false;
-    }
 };
 
 #endif
